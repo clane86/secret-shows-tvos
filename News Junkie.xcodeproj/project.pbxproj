@@ -7,7 +7,10 @@
 	objects = {
 
 /* Begin PBXFileReference section */
+		A524700F2F679B500067DF14 /* News Junkie.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = "News Junkie.xcodeproj"; sourceTree = "<group>"; };
 		A55E528D2F674BCA00762A41 /* News Junkie.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "News Junkie.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A55E52AF2F674D9200762A41 /* News Junkie.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "News Junkie.xcodeproj"; path = "../../NewsJunkie-iPhone-Source/News Junkie.xcodeproj"; sourceTree = SOURCE_ROOT; };
+		A55E52BC2F675BF800762A41 /* News Junkie.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = "News Junkie.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -29,9 +32,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A52470102F679B500067DF14 /* Products */ = {
+			isa = PBXGroup;
+			name = Products;
+			sourceTree = "<group>";
+		};
 		A55E52842F674BCA00762A41 = {
 			isa = PBXGroup;
 			children = (
+				A524700F2F679B500067DF14 /* News Junkie.xcodeproj */,
+				A55E52BC2F675BF800762A41 /* News Junkie.xcodeproj */,
+				A55E52AF2F674D9200762A41 /* News Junkie.xcodeproj */,
 				A55E528F2F674BCA00762A41 /* News Junkie */,
 				A55E528E2F674BCA00762A41 /* Products */,
 			);
@@ -42,6 +53,18 @@
 			children = (
 				A55E528D2F674BCA00762A41 /* News Junkie.app */,
 			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A55E52B32F674D9200762A41 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A55E52BD2F675BF800762A41 /* Products */ = {
+			isa = PBXGroup;
 			name = Products;
 			sourceTree = "<group>";
 		};
@@ -97,6 +120,20 @@
 			preferredProjectObjectVersion = 77;
 			productRefGroup = A55E528E2F674BCA00762A41 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = A55E52B32F674D9200762A41 /* Products */;
+					ProjectRef = A55E52AF2F674D9200762A41 /* News Junkie.xcodeproj */;
+				},
+				{
+					ProductGroup = A55E52BD2F675BF800762A41 /* Products */;
+					ProjectRef = A55E52BC2F675BF800762A41 /* News Junkie.xcodeproj */;
+				},
+				{
+					ProductGroup = A52470102F679B500067DF14 /* Products */;
+					ProjectRef = A524700F2F679B500067DF14 /* News Junkie.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				A55E528C2F674BCA00762A41 /* News Junkie */,
@@ -272,6 +309,7 @@
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 16.6;
 			};
 			name = Debug;
 		};
@@ -301,6 +339,7 @@
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 16.6;
 			};
 			name = Release;
 		};

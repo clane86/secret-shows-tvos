@@ -1,8 +1,8 @@
 {
-  "images" : [
+  "data" : [
     {
-      "filename" : "appstore-icon-tv.png",
-      "idiom" : "tv"
+      "filename" : "icon.json",
+      "idiom" : "universal"
     }
   ],
   "info" : {

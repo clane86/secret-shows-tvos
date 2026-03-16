@@ -9,9 +9,19 @@ import SwiftUI
 
 @main
 struct News_JunkieApp: App {
+    @Environment(\.scenePhase) private var scenePhase
+    @StateObject private var appModel = AppModel()
+
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(appModel)
+                .task {
+                    appModel.bootstrap()
+                }
+                .onChange(of: scenePhase) { newPhase in
+                    appModel.handleScenePhase(newPhase)
+                }
         }
     }
 }
