@@ -6,22 +6,93 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		A5035B8E2F6B8CE700FB8892 /* TVServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5035B8D2F6B8CE700FB8892 /* TVServices.framework */; };
+		A5035B952F6B8CE700FB8892 /* NewsJunkieTopShelf.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = A5035B8B2F6B8CE700FB8892 /* NewsJunkieTopShelf.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		A5035B932F6B8CE700FB8892 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A55E52852F674BCA00762A41 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A5035B8A2F6B8CE700FB8892;
+			remoteInfo = NewsJunkieTopShelf;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		A5035B9A2F6B8CE700FB8892 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				A5035B952F6B8CE700FB8892 /* NewsJunkieTopShelf.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		A5035B4C2F6A3F1600FB8892 /* News Junkie.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = "News Junkie.xcodeproj"; sourceTree = "<group>"; };
+		A5035B8B2F6B8CE700FB8892 /* NewsJunkieTopShelf.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = NewsJunkieTopShelf.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		A5035B8D2F6B8CE700FB8892 /* TVServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TVServices.framework; path = System/Library/Frameworks/TVServices.framework; sourceTree = SDKROOT; };
 		A524700F2F679B500067DF14 /* News Junkie.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = "News Junkie.xcodeproj"; sourceTree = "<group>"; };
 		A55E528D2F674BCA00762A41 /* News Junkie.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "News Junkie.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A55E52AF2F674D9200762A41 /* News Junkie.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "News Junkie.xcodeproj"; path = "../../NewsJunkie-iPhone-Source/News Junkie.xcodeproj"; sourceTree = SOURCE_ROOT; };
 		A55E52BC2F675BF800762A41 /* News Junkie.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = "News Junkie.xcodeproj"; sourceTree = "<group>"; };
+		D3B100000000000000000001 /* Config/Debug-Dev.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Config/Debug-Dev.xcconfig"; sourceTree = SOURCE_ROOT; };
+		D3B100000000000000000002 /* Config/Debug-Live.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Config/Debug-Live.xcconfig"; sourceTree = SOURCE_ROOT; };
+		D3B100000000000000000003 /* Config/Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config/Release.xcconfig; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		A5035B962F6B8CE700FB8892 /* Exceptions for "NewsJunkieTopShelf" folder in "NewsJunkieTopShelf" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = A5035B8A2F6B8CE700FB8892 /* NewsJunkieTopShelf */;
+		};
+		D3B100000000000000000020 /* Exceptions for "News Junkie" folder in "News Junkie" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = A55E528C2F674BCA00762A41 /* News Junkie */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		A5035B8F2F6B8CE700FB8892 /* NewsJunkieTopShelf */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				A5035B962F6B8CE700FB8892 /* Exceptions for "NewsJunkieTopShelf" folder in "NewsJunkieTopShelf" target */,
+			);
+			path = NewsJunkieTopShelf;
+			sourceTree = "<group>";
+		};
 		A55E528F2F674BCA00762A41 /* News Junkie */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				D3B100000000000000000020 /* Exceptions for "News Junkie" folder in "News Junkie" target */,
+			);
 			path = "News Junkie";
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		A5035B882F6B8CE700FB8892 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A5035B8E2F6B8CE700FB8892 /* TVServices.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A55E528A2F674BCA00762A41 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -32,6 +103,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A5035B4D2F6A3F1600FB8892 /* Products */ = {
+			isa = PBXGroup;
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A5035B8C2F6B8CE700FB8892 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A5035B8D2F6B8CE700FB8892 /* TVServices.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		A52470102F679B500067DF14 /* Products */ = {
 			isa = PBXGroup;
 			name = Products;
@@ -40,10 +124,14 @@
 		A55E52842F674BCA00762A41 = {
 			isa = PBXGroup;
 			children = (
+				D3B100000000000000000004 /* Config */,
+				A5035B4C2F6A3F1600FB8892 /* News Junkie.xcodeproj */,
 				A524700F2F679B500067DF14 /* News Junkie.xcodeproj */,
 				A55E52BC2F675BF800762A41 /* News Junkie.xcodeproj */,
 				A55E52AF2F674D9200762A41 /* News Junkie.xcodeproj */,
 				A55E528F2F674BCA00762A41 /* News Junkie */,
+				A5035B8F2F6B8CE700FB8892 /* NewsJunkieTopShelf */,
+				A5035B8C2F6B8CE700FB8892 /* Frameworks */,
 				A55E528E2F674BCA00762A41 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -52,6 +140,7 @@
 			isa = PBXGroup;
 			children = (
 				A55E528D2F674BCA00762A41 /* News Junkie.app */,
+				A5035B8B2F6B8CE700FB8892 /* NewsJunkieTopShelf.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -68,9 +157,41 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		D3B100000000000000000004 /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				D3B100000000000000000001 /* Config/Debug-Dev.xcconfig */,
+				D3B100000000000000000002 /* Config/Debug-Live.xcconfig */,
+				D3B100000000000000000003 /* Config/Release.xcconfig */,
+			);
+			path = Config;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		A5035B8A2F6B8CE700FB8892 /* NewsJunkieTopShelf */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A5035B972F6B8CE700FB8892 /* Build configuration list for PBXNativeTarget "NewsJunkieTopShelf" */;
+			buildPhases = (
+				A5035B872F6B8CE700FB8892 /* Sources */,
+				A5035B882F6B8CE700FB8892 /* Frameworks */,
+				A5035B892F6B8CE700FB8892 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				A5035B8F2F6B8CE700FB8892 /* NewsJunkieTopShelf */,
+			);
+			name = NewsJunkieTopShelf;
+			packageProductDependencies = (
+			);
+			productName = NewsJunkieTopShelf;
+			productReference = A5035B8B2F6B8CE700FB8892 /* NewsJunkieTopShelf.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		A55E528C2F674BCA00762A41 /* News Junkie */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = A55E52982F674BCC00762A41 /* Build configuration list for PBXNativeTarget "News Junkie" */;
@@ -78,10 +199,12 @@
 				A55E52892F674BCA00762A41 /* Sources */,
 				A55E528A2F674BCA00762A41 /* Frameworks */,
 				A55E528B2F674BCA00762A41 /* Resources */,
+				A5035B9A2F6B8CE700FB8892 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				A5035B942F6B8CE700FB8892 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				A55E528F2F674BCA00762A41 /* News Junkie */,
@@ -103,6 +226,9 @@
 				LastSwiftUpdateCheck = 2630;
 				LastUpgradeCheck = 2630;
 				TargetAttributes = {
+					A5035B8A2F6B8CE700FB8892 = {
+						CreatedOnToolsVersion = 26.3;
+					};
 					A55E528C2F674BCA00762A41 = {
 						CreatedOnToolsVersion = 26.3;
 					};
@@ -133,15 +259,27 @@
 					ProductGroup = A52470102F679B500067DF14 /* Products */;
 					ProjectRef = A524700F2F679B500067DF14 /* News Junkie.xcodeproj */;
 				},
+				{
+					ProductGroup = A5035B4D2F6A3F1600FB8892 /* Products */;
+					ProjectRef = A5035B4C2F6A3F1600FB8892 /* News Junkie.xcodeproj */;
+				},
 			);
 			projectRoot = "";
 			targets = (
 				A55E528C2F674BCA00762A41 /* News Junkie */,
+				A5035B8A2F6B8CE700FB8892 /* NewsJunkieTopShelf */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		A5035B892F6B8CE700FB8892 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A55E528B2F674BCA00762A41 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -152,6 +290,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		A5035B872F6B8CE700FB8892 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A55E52892F674BCA00762A41 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -161,9 +306,78 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		A5035B942F6B8CE700FB8892 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A5035B8A2F6B8CE700FB8892 /* NewsJunkieTopShelf */;
+			targetProxy = A5035B932F6B8CE700FB8892 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		A5035B982F6B8CE700FB8892 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D3B100000000000000000001 /* Config/Debug-Dev.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = NewsJunkieTopShelf/NewsJunkieTopShelf.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 238VZ377MF;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = NewsJunkieTopShelf/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = NewsJunkieTopShelf;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "clane.News-Junkie.NewsJunkieTopShelf";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+			};
+			name = Debug;
+		};
+		A5035B992F6B8CE700FB8892 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D3B100000000000000000003 /* Config/Release.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = NewsJunkieTopShelf/NewsJunkieTopShelf.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 238VZ377MF;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = NewsJunkieTopShelf/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = NewsJunkieTopShelf;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "clane.News-Junkie.NewsJunkieTopShelf";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+			};
+			name = Release;
+		};
 		A55E52962F674BCC00762A41 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D3B100000000000000000001 /* Config/Debug-Dev.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -228,6 +442,7 @@
 		};
 		A55E52972F674BCC00762A41 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D3B100000000000000000003 /* Config/Release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -285,16 +500,18 @@
 		};
 		A55E52992F674BCC00762A41 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D3B100000000000000000001 /* Config/Debug-Dev.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "News Junkie/News Junkie.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 238VZ377MF;
 				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UIUserInterfaceStyle = Automatic;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "News Junkie/Info.plist";
+				INFOPLIST_KEY_CFBundleURLTypes = "{\n    CFBundleTypeRole = Viewer;\n    CFBundleURLName = \"com.thenewsjunkie.tv\";\n    CFBundleURLSchemes =     (\n        njtv\n    );\n}";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -315,16 +532,18 @@
 		};
 		A55E529A2F674BCC00762A41 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D3B100000000000000000003 /* Config/Release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "News Junkie/News Junkie.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 238VZ377MF;
 				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UIUserInterfaceStyle = Automatic;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "News Junkie/Info.plist";
+				INFOPLIST_KEY_CFBundleURLTypes = "{\n    CFBundleTypeRole = Viewer;\n    CFBundleURLName = \"com.thenewsjunkie.tv\";\n    CFBundleURLSchemes =     (\n        njtv\n    );\n}";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -343,13 +562,284 @@
 			};
 			name = Release;
 		};
+		D3B100000000000000000011 /* Debug-Dev */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D3B100000000000000000001 /* Config/Debug-Dev.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 238VZ377MF;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = appletvos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TVOS_DEPLOYMENT_TARGET = 26.2;
+			};
+			name = "Debug-Dev";
+		};
+		D3B100000000000000000012 /* Debug-Live */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D3B100000000000000000002 /* Config/Debug-Live.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 238VZ377MF;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = appletvos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TVOS_DEPLOYMENT_TARGET = 26.2;
+			};
+			name = "Debug-Live";
+		};
+		D3B100000000000000000013 /* Debug-Dev */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D3B100000000000000000001 /* Config/Debug-Dev.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "News Junkie/News Junkie.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 238VZ377MF;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "News Junkie/Info.plist";
+				INFOPLIST_KEY_CFBundleURLTypes = "{\n    CFBundleTypeRole = Viewer;\n    CFBundleURLName = \"com.thenewsjunkie.tv\";\n    CFBundleURLSchemes =     (\n        njtv\n    );\n}";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "clane.News-Junkie";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG DEV_SERVER $(inherited)";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 16.6;
+			};
+			name = "Debug-Dev";
+		};
+		D3B100000000000000000014 /* Debug-Live */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D3B100000000000000000002 /* Config/Debug-Live.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "News Junkie/News Junkie.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 238VZ377MF;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "News Junkie/Info.plist";
+				INFOPLIST_KEY_CFBundleURLTypes = "{\n    CFBundleTypeRole = Viewer;\n    CFBundleURLName = \"com.thenewsjunkie.tv\";\n    CFBundleURLSchemes =     (\n        njtv\n    );\n}";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "clane.News-Junkie";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 16.6;
+			};
+			name = "Debug-Live";
+		};
+		D3B100000000000000000015 /* Debug-Dev */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D3B100000000000000000001 /* Config/Debug-Dev.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = NewsJunkieTopShelf/NewsJunkieTopShelf.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 238VZ377MF;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = NewsJunkieTopShelf/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = NewsJunkieTopShelf;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "clane.News-Junkie.NewsJunkieTopShelf";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG DEV_SERVER $(inherited)";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+			};
+			name = "Debug-Dev";
+		};
+		D3B100000000000000000016 /* Debug-Live */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D3B100000000000000000002 /* Config/Debug-Live.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = NewsJunkieTopShelf/NewsJunkieTopShelf.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 238VZ377MF;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = NewsJunkieTopShelf/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = NewsJunkieTopShelf;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "clane.News-Junkie.NewsJunkieTopShelf";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+			};
+			name = "Debug-Live";
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		A5035B972F6B8CE700FB8892 /* Build configuration list for PBXNativeTarget "NewsJunkieTopShelf" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A5035B982F6B8CE700FB8892 /* Debug */,
+				D3B100000000000000000015 /* Debug-Dev */,
+				D3B100000000000000000016 /* Debug-Live */,
+				A5035B992F6B8CE700FB8892 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		A55E52882F674BCA00762A41 /* Build configuration list for PBXProject "News Junkie" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A55E52962F674BCC00762A41 /* Debug */,
+				D3B100000000000000000011 /* Debug-Dev */,
+				D3B100000000000000000012 /* Debug-Live */,
 				A55E52972F674BCC00762A41 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -359,6 +849,8 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A55E52992F674BCC00762A41 /* Debug */,
+				D3B100000000000000000013 /* Debug-Dev */,
+				D3B100000000000000000014 /* Debug-Live */,
 				A55E529A2F674BCC00762A41 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;

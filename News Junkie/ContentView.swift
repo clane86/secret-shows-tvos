@@ -10,6 +10,14 @@ import Combine
 import SwiftUI
 import UIKit
 
+enum SharedStorage {
+    static let appGroupID = "group.com.thenewsjunkie.tv"
+
+    static var defaults: UserDefaults {
+        UserDefaults(suiteName: appGroupID) ?? .standard
+    }
+}
+
 struct ContentView: View {
     @EnvironmentObject private var appModel: AppModel
 
@@ -310,8 +318,13 @@ private struct ErrorScreen: View {
 private struct LibraryScreen: View {
     @EnvironmentObject private var appModel: AppModel
     @FocusState private var focusedElement: FocusElement?
+    @State private var logoutUpPressCount = 0
+    @State private var lastLogoutUpPressDate: Date?
 
-    private let columns = [GridItem(.adaptive(minimum: 420, maximum: 520), spacing: 36)]
+    private let gridSpacing: CGFloat = 36
+    private let cardMinimumWidth: CGFloat = 420
+    private let cardMaximumWidth: CGFloat = 520
+    private let logoutUpPressWindow: TimeInterval = 1.8
 
     private enum FocusElement: Hashable {
         case logout
@@ -319,55 +332,68 @@ private struct LibraryScreen: View {
     }
 
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 36) {
-                LibraryHeroHeader()
+        GeometryReader { geometry in
+            let columnCount = gridColumnCount(for: geometry.size.width)
+            let columns = Array(
+                repeating: GridItem(.flexible(minimum: cardMinimumWidth, maximum: cardMaximumWidth), spacing: gridSpacing),
+                count: columnCount
+            )
 
-                HStack {
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text("Hello, \(appModel.greetingName)!")
-                            .font(.system(size: 56, weight: .bold))
-                            .foregroundStyle(.white)
-                        Text("Browse the Secret Shows video library...")
-                            .font(.system(size: 24, weight: .medium))
-                            .foregroundStyle(.white.opacity(0.74))
+            ScrollView {
+                VStack(alignment: .leading, spacing: 36) {
+                    LibraryHeroHeader()
+
+                    HStack {
+                        VStack(alignment: .leading, spacing: 8) {
+                            Text("Hello, \(appModel.greetingName)!")
+                                .font(.system(size: 56, weight: .bold))
+                                .foregroundStyle(.white)
+                            Text("Browse the Secret Shows video library...")
+                                .font(.system(size: 24, weight: .medium))
+                                .foregroundStyle(.white.opacity(0.74))
+                        }
+
+                        Spacer()
+
+                        Button("Log Out", role: .destructive) {
+                            appModel.logout()
+                        }
+                        .buttonStyle(SecondaryActionButtonStyle())
+                        .focused($focusedElement, equals: .logout)
+                        .onMoveCommand(perform: handleLogoutMove)
                     }
 
-                    Spacer()
-
-                    Button("Log Out", role: .destructive) {
-                        appModel.logout()
-                    }
-                    .buttonStyle(SecondaryActionButtonStyle())
-                    .focused($focusedElement, equals: .logout)
-                }
-
-                if appModel.videoShows.isEmpty {
-                    Text("No Secret Shows videos are currently available.")
-                        .font(.system(size: 28, weight: .medium))
-                        .foregroundStyle(.white.opacity(0.82))
-                        .padding(.top, 40)
-                } else {
-                    LazyVGrid(columns: columns, spacing: 36) {
-                        ForEach(appModel.videoShows) { show in
-                            Button {
-                                appModel.select(show: show)
-                            } label: {
+                    if appModel.videoShows.isEmpty {
+                        Text("No Secret Shows videos are currently available.")
+                            .font(.system(size: 28, weight: .medium))
+                            .foregroundStyle(.white.opacity(0.82))
+                            .padding(.top, 40)
+                    } else {
+                        LazyVGrid(columns: columns, spacing: gridSpacing) {
+                            ForEach(appModel.videoShows) { show in
                                 SecretShowCard(
                                     show: show,
-                                    progress: appModel.playbackProgress(for: show)
+                                    progress: appModel.playbackProgress(for: show),
+                                    isFocused: focusedElement == .grid(show.id)
                                 )
+                                .contentShape(RoundedRectangle(cornerRadius: 24, style: .continuous))
+                                .focusable()
+                                .focused($focusedElement, equals: .grid(show.id))
+                                .onTapGesture {
+                                    appModel.select(show: show)
+                                }
+                                .onMoveCommand { direction in
+                                    handleGridMove(direction, from: show.id, columnCount: columnCount)
+                                }
                             }
-                            .buttonStyle(.plain)
-                            .focused($focusedElement, equals: .grid(show.id))
+                        }
+                        .onExitCommand {
+                            focusedElement = .logout
                         }
                     }
-                    .onExitCommand {
-                        focusedElement = .logout
-                    }
                 }
+                .padding(60)
             }
-            .padding(60)
         }
         .onAppear {
             restoreGridFocusIfNeeded()
@@ -385,6 +411,64 @@ private struct LibraryScreen: View {
                 appModel.preferredLibraryFocusShowID = nil
             }
         }
+    }
+
+    private func gridColumnCount(for totalWidth: CGFloat) -> Int {
+        let availableWidth = max(totalWidth - 120, cardMinimumWidth)
+        let count = Int((availableWidth + gridSpacing) / (cardMinimumWidth + gridSpacing))
+        return max(count, 1)
+    }
+
+    private func handleGridMove(_ direction: MoveCommandDirection, from showID: String, columnCount: Int) {
+        guard let currentIndex = appModel.videoShows.firstIndex(where: { $0.id == showID }) else { return }
+
+        let rowStart = (currentIndex / columnCount) * columnCount
+        let rowEnd = min(rowStart + columnCount - 1, appModel.videoShows.count - 1)
+
+        switch direction {
+        case .right:
+            let nextRowStart = rowStart + columnCount
+            guard currentIndex == rowEnd, nextRowStart < appModel.videoShows.count else { return }
+            focusedElement = .grid(appModel.videoShows[nextRowStart].id)
+        case .left:
+            let previousRowEnd = rowStart - 1
+            guard currentIndex == rowStart, previousRowEnd >= 0 else { return }
+            focusedElement = .grid(appModel.videoShows[previousRowEnd].id)
+        default:
+            break
+        }
+    }
+
+    private func handleLogoutMove(_ direction: MoveCommandDirection) {
+        guard focusedElement == .logout else {
+            resetLogoutEasterEgg()
+            return
+        }
+
+        guard direction == .up else {
+            resetLogoutEasterEgg()
+            return
+        }
+
+        let now = Date()
+        if let lastLogoutUpPressDate,
+           now.timeIntervalSince(lastLogoutUpPressDate) <= logoutUpPressWindow {
+            logoutUpPressCount += 1
+        } else {
+            logoutUpPressCount = 1
+        }
+
+        self.lastLogoutUpPressDate = now
+
+        guard logoutUpPressCount >= 4 else { return }
+
+        SplashPolicy.resetSplashCooldown()
+        resetLogoutEasterEgg()
+    }
+
+    private func resetLogoutEasterEgg() {
+        logoutUpPressCount = 0
+        lastLogoutUpPressDate = nil
     }
 }
 
@@ -481,7 +565,16 @@ private struct LibraryHeroHeader: View {
 private struct SecretShowCard: View {
     let show: SecretShow
     let progress: ShowPlaybackProgress
-    @Environment(\.isFocused) private var isFocused
+    let isFocused: Bool
+
+    private var posterURL: URL? {
+        guard let posterImage = show.posterImage?.trimmingCharacters(in: .whitespacesAndNewlines),
+              !posterImage.isEmpty,
+              posterImage.lowercased() != "null" else {
+            return nil
+        }
+        return URL(string: posterImage)
+    }
 
     private var formattedDate: String? {
         guard let pubDate = show.pubDate else { return nil }
@@ -492,13 +585,24 @@ private struct SecretShowCard: View {
         VStack(alignment: .leading, spacing: 18) {
             RoundedRectangle(cornerRadius: 20, style: .continuous)
                 .fill(Color.white)
-                .frame(height: 250)
+                .aspectRatio(381.0 / 200.0, contentMode: .fit)
                 .overlay {
-                    Image("SecretShowsPlaceholder")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 176, height: 176)
+                    if let posterURL {
+                        AsyncImage(url: posterURL) { phase in
+                            switch phase {
+                            case .success(let image):
+                                image
+                                    .resizable()
+                                    .scaledToFit()
+                            default:
+                                placeholderPoster
+                            }
+                        }
+                    } else {
+                        placeholderPoster
+                    }
                 }
+                .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
                 .overlay(alignment: .topTrailing) {
                     if progress.isCompleted {
                         ZStack {
@@ -537,7 +641,7 @@ private struct SecretShowCard: View {
 
             Text(show.title)
                 .font(.system(size: 28, weight: .semibold))
-                .foregroundStyle(isFocused ? .black : .white)
+                .foregroundStyle(.white)
                 .multilineTextAlignment(.leading)
                 .lineLimit(2)
 
@@ -548,14 +652,28 @@ private struct SecretShowCard: View {
                     Spacer()
                     Text(formattedDate)
                         .font(.system(size: 20, weight: .medium))
-                        .foregroundStyle(isFocused ? Color.black.opacity(0.72) : Color.white.opacity(0.7))
+                        .foregroundStyle(isFocused ? Color.white.opacity(0.78) : Color.white.opacity(0.7))
                 }
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
-        .padding(24)
-        .background(Color.white.opacity(0.08))
+        .padding(14)
+        .background(isFocused ? Color.white.opacity(0.40) : Color.white.opacity(0.08))
+        .overlay {
+            RoundedRectangle(cornerRadius: 24, style: .continuous)
+                .stroke(isFocused ? Color.white.opacity(0.75) : Color.clear, lineWidth: 1.0)
+        }
         .clipShape(RoundedRectangle(cornerRadius: 24, style: .continuous))
+        .scaleEffect(isFocused ? 1.012 : 1.0)
+        .shadow(color: isFocused ? Color.white.opacity(0.08) : .clear, radius: 8)
+        .animation(.easeOut(duration: 0.16), value: isFocused)
+    }
+
+    private var placeholderPoster: some View {
+        Image("SecretShowsPlaceholder")
+            .resizable()
+            .scaledToFit()
+            .frame(width: 176, height: 176)
     }
 }
 
@@ -719,7 +837,10 @@ final class AppModel: ObservableObject {
     private let sessionStore = SessionStore()
     private let navigationStore = NavigationStore()
     private let progressStore = PlaybackProgressStore()
+    private let cacheStore = SecretShowsCacheStore()
     private var hasBootstrapped = false
+    private var isRefreshingAuthorizedContent = false
+    private var pendingDeepLinkShowID: String?
 
     var selectedShow: SecretShow? {
         guard let selectedShowID else { return nil }
@@ -738,6 +859,7 @@ final class AppModel: ObservableObject {
         if SplashPolicy.shouldShowSplash {
             screen = .splash
         } else {
+            SplashPolicy.markForegroundedNow()
             Task {
                 await restoreSession()
             }
@@ -746,6 +868,7 @@ final class AppModel: ObservableObject {
 
     func splashFinished() {
         guard screen == .splash else { return }
+        SplashPolicy.markForegroundedNow()
         Task {
             await restoreSession()
         }
@@ -753,7 +876,43 @@ final class AppModel: ObservableObject {
 
     func handleScenePhase(_ scenePhase: ScenePhase) {
         if scenePhase == .active {
+            guard sessionStore.currentSession != nil,
+                  activePlaybackSession == nil,
+                  screen != .splash,
+                  screen != .loading else {
+                return
+            }
+
+            if SplashPolicy.shouldShowSplash {
+                screen = .splash
+                return
+            }
+
             SplashPolicy.markForegroundedNow()
+
+            Task {
+                await loadAuthorizedContent(restoringPreviousLocation: true, showLoadingScreen: false)
+            }
+        }
+    }
+
+    func handleOpenURL(_ url: URL) {
+        guard let showID = DeepLinkParser.showID(from: url) else { return }
+        pendingDeepLinkShowID = showID
+
+        if sessionStore.currentSession == nil {
+            screen = .login
+            return
+        }
+
+        if let show = videoShows.first(where: { $0.id == showID }) {
+            select(show: show)
+            pendingDeepLinkShowID = nil
+            return
+        }
+
+        Task {
+            await loadAuthorizedContent(restoringPreviousLocation: false, showLoadingScreen: false)
         }
     }
 
@@ -831,7 +990,7 @@ final class AppModel: ObservableObject {
     }
 
     func play(show: SecretShow, resume: Bool) {
-        guard URL(string: show.videoURL) != nil else {
+        guard URL(string: show.playbackURLString) != nil else {
             errorMessage = "This Secret Show does not have a valid video URL."
             screen = .error
             return
@@ -857,17 +1016,23 @@ final class AppModel: ObservableObject {
             return
         }
 
-        await loadAuthorizedContent(restoringPreviousLocation: true)
+        await loadAuthorizedContent(restoringPreviousLocation: true, showLoadingScreen: true)
     }
 
-    private func loadAuthorizedContent(restoringPreviousLocation: Bool) async {
+    private func loadAuthorizedContent(restoringPreviousLocation: Bool, showLoadingScreen: Bool = true) async {
+        guard !isRefreshingAuthorizedContent else { return }
         guard let session = sessionStore.currentSession else {
             screen = .login
             return
         }
 
-        loadingMessage = "Loading Secret Shows"
-        screen = .loading
+        isRefreshingAuthorizedContent = true
+        defer { isRefreshingAuthorizedContent = false }
+
+        if showLoadingScreen {
+            loadingMessage = "Loading Secret Shows"
+            screen = .loading
+        }
 
         do {
             let userScore = try await apiClient.fetchUserScore(session: session)
@@ -884,10 +1049,15 @@ final class AppModel: ObservableObject {
             let shows = try await apiClient.fetchSecretShows(session: session)
             let filteredShows = shows.filter { $0.hasVideo }
             videoShows = filteredShows
+            cacheStore.save(filteredShows)
 
             guard !filteredShows.isEmpty else {
                 errorMessage = "No Secret Shows videos are currently available for this account."
                 screen = .error
+                return
+            }
+
+            if openPendingDeepLinkIfNeeded(using: filteredShows) {
                 return
             }
 
@@ -922,6 +1092,21 @@ final class AppModel: ObservableObject {
             screen = .library
         }
     }
+
+    @discardableResult
+    private func openPendingDeepLinkIfNeeded(using shows: [SecretShow]) -> Bool {
+        guard let pendingDeepLinkShowID,
+              let show = shows.first(where: { $0.id == pendingDeepLinkShowID }) else {
+            return false
+        }
+
+        preferredLibraryFocusShowID = show.id
+        selectedShowID = show.id
+        navigationStore.save(.detail(showID: show.id))
+        screen = .detail
+        self.pendingDeepLinkShowID = nil
+        return true
+    }
 }
 
 struct SecretShow: Codable, Identifiable, Hashable {
@@ -929,13 +1114,29 @@ struct SecretShow: Codable, Identifiable, Hashable {
     let title: String
     let audioURL: String
     let videoURL: String
+    let posterImage: String?
     let pubDate: String?
     let descriptionText: String
     let images: [SecretShowImage]
 
     var hasVideo: Bool {
-        let normalized = videoURL.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+        let normalized = playbackURLString.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
         return !normalized.isEmpty && normalized != "<null>" && normalized != "null"
+    }
+
+    var playbackURLString: String {
+        let normalized = videoURL.trimmingCharacters(in: .whitespacesAndNewlines)
+        let iframePrefix = "https://iframe.mediadelivery.net/"
+
+        guard normalized.hasPrefix(iframePrefix) else {
+            return normalized
+        }
+
+        guard let streamID = normalized.split(separator: "/").last, !streamID.isEmpty else {
+            return normalized
+        }
+
+        return "https://vz-dcd66bc4-d38.b-cdn.net/\(streamID)/playlist.m3u8"
     }
 
     enum CodingKeys: String, CodingKey {
@@ -943,6 +1144,7 @@ struct SecretShow: Codable, Identifiable, Hashable {
         case title = "Title"
         case audioURL = "Url"
         case videoURL = "videoUrl"
+        case posterImage
         case pubDate
         case descriptionText = "description"
         case images = "SeeItNowNew"
@@ -954,6 +1156,7 @@ struct SecretShow: Codable, Identifiable, Hashable {
         title = try container.decodeFlexibleString(forKey: .title) ?? "Untitled Show"
         audioURL = try container.decodeFlexibleString(forKey: .audioURL) ?? ""
         videoURL = try container.decodeFlexibleString(forKey: .videoURL) ?? ""
+        posterImage = try container.decodeFlexibleString(forKey: .posterImage)
         pubDate = try container.decodeFlexibleString(forKey: .pubDate)
         descriptionText = try container.decodeFlexibleString(forKey: .descriptionText) ?? "No description available."
         images = try container.decodeIfPresent([SecretShowImage].self, forKey: .images) ?? []
@@ -1031,7 +1234,7 @@ enum SavedRoute: Codable {
 }
 
 final class SessionStore {
-    private let defaults = UserDefaults.standard
+    private let defaults = SharedStorage.defaults
 
     var currentSession: UserSession? {
         guard let data = defaults.data(forKey: StorageKeys.session) else { return nil }
@@ -1069,7 +1272,7 @@ final class NavigationStore {
 }
 
 final class PlaybackProgressStore {
-    private let defaults = UserDefaults.standard
+    private let defaults = SharedStorage.defaults
 
     func resumeTime(for showID: String) -> Double {
         record(for: showID)?.resumeTime ?? 0
@@ -1088,6 +1291,7 @@ final class PlaybackProgressStore {
         record.lastWatchedTime = clampedTime
         record.duration = max(record.duration, normalizedDuration)
         record.isCompleted = isCompleted
+        record.lastUpdatedAt = Date()
         save(record, for: showID)
     }
 
@@ -1097,6 +1301,7 @@ final class PlaybackProgressStore {
         record.lastWatchedTime = normalizedDuration
         record.duration = max(record.duration, normalizedDuration)
         record.isCompleted = true
+        record.lastUpdatedAt = Date()
         save(record, for: showID)
     }
 
@@ -1142,6 +1347,24 @@ final class PlaybackProgressStore {
     }
 }
 
+final class SecretShowsCacheStore {
+    private let defaults = SharedStorage.defaults
+
+    var cachedShows: [SecretShow] {
+        guard let data = defaults.data(forKey: StorageKeys.cachedShows),
+              let shows = try? JSONDecoder().decode([SecretShow].self, from: data) else {
+            return []
+        }
+        return shows
+    }
+
+    func save(_ shows: [SecretShow]) {
+        guard let data = try? JSONEncoder().encode(shows) else { return }
+        defaults.set(data, forKey: StorageKeys.cachedShows)
+        defaults.set(Date(), forKey: StorageKeys.cachedShowsUpdatedAt)
+    }
+}
+
 enum SplashPolicy {
     private static let splashInterval: TimeInterval = 6 * 60 * 60
 
@@ -1155,6 +1378,10 @@ enum SplashPolicy {
     static func markForegroundedNow() {
         UserDefaults.standard.set(Date(), forKey: StorageKeys.lastForegroundDate)
     }
+
+    static func resetSplashCooldown() {
+        UserDefaults.standard.removeObject(forKey: StorageKeys.lastForegroundDate)
+    }
 }
 
 enum StorageKeys {
@@ -1164,6 +1391,8 @@ enum StorageKeys {
     static let lastForegroundDate = "tv.secretshows.lastForegroundDate"
     static let lastEmail = "tv.secretshows.lastEmail"
     static let deviceID = "tv.secretshows.deviceID"
+    static let cachedShows = "tv.secretshows.cachedShows"
+    static let cachedShowsUpdatedAt = "tv.secretshows.cachedShowsUpdatedAt"
 }
 
 enum ShowPlaybackRules {
@@ -1196,6 +1425,7 @@ private struct PlaybackRecord: Codable {
     var lastWatchedTime: Double = 0
     var duration: Double = 0
     var isCompleted = false
+    var lastUpdatedAt: Date?
 
     var resumeTime: Double {
         guard !isCompleted, ShowPlaybackRules.isStarted(time: lastWatchedTime) else { return 0 }
@@ -1395,13 +1625,22 @@ final class APIClient {
 }
 
 enum APIConfiguration {
-    static let baseURL = "https://thenewsjunkie.com"
+    static let baseURL: String = {
+        if let override = ProcessInfo.processInfo.environment["API_BASE_URL"], !override.isEmpty {
+            return override
+        }
+        #if DEV_SERVER
+        return "https://dev.thenewsjunkie.com"
+        #else
+        return "https://thenewsjunkie.com"
+        #endif
+    }()
     static let apiPath = "/api/v6/ApiControllerV7.php"
     static let appKey = "f1b23fc72bd79ce53ab96e48b24b78a2"
     static let appVersion = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "1.0"
     static let deviceType = "iPhone"
     static let deviceID: String = {
-        let defaults = UserDefaults.standard
+        let defaults = SharedStorage.defaults
         if let existing = defaults.string(forKey: StorageKeys.deviceID) {
             return existing
         }
@@ -1410,6 +1649,22 @@ enum APIConfiguration {
         defaults.set(generated, forKey: StorageKeys.deviceID)
         return generated
     }()
+}
+
+enum DeepLinkParser {
+    static let scheme = "njtv"
+
+    static func showID(from url: URL) -> String? {
+        guard url.scheme?.lowercased() == scheme else { return nil }
+
+        if url.host == "show" {
+            return url.pathComponents.dropFirst().first
+        }
+
+        let components = url.pathComponents.filter { $0 != "/" }
+        guard components.first == "show", components.count > 1 else { return nil }
+        return components[1]
+    }
 }
 
 enum SplashVideoResource {
@@ -1602,7 +1857,7 @@ final class PlayerSession: NSObject, ObservableObject, Identifiable {
     init(show: SecretShow, startTime: Double, progressStore: PlaybackProgressStore) {
         self.show = show
         self.progressStore = progressStore
-        self.player = AVPlayer(url: URL(string: show.videoURL) ?? URL(fileURLWithPath: "/dev/null"))
+        self.player = AVPlayer(url: URL(string: show.playbackURLString) ?? URL(fileURLWithPath: "/dev/null"))
         super.init()
 
         if startTime > 0 {
@@ -1665,5 +1920,16 @@ struct VideoPlayerControllerRepresentable: UIViewControllerRepresentable {
 
     func updateUIViewController(_ uiViewController: AVPlayerViewController, context: Context) {
         uiViewController.player = session.player
+    }
+}
+
+private extension View {
+    @ViewBuilder
+    func disableFocusEffectIfAvailable() -> some View {
+        if #available(tvOS 17.0, *) {
+            focusEffectDisabled()
+        } else {
+            self
+        }
     }
 }

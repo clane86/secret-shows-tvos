@@ -19,6 +19,9 @@ struct News_JunkieApp: App {
                 .task {
                     appModel.bootstrap()
                 }
+                .onOpenURL { url in
+                    appModel.handleOpenURL(url)
+                }
                 .onChange(of: scenePhase) { newPhase in
                     appModel.handleScenePhase(newPhase)
                 }

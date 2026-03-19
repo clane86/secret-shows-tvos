@@ -51,6 +51,8 @@ This document captures the major research, engineering, and UX work completed du
 - Preserved the six-hour splash replay rule using local foreground timestamp storage.
 - Added tap-to-skip support for the splash.
 - Removed the on-screen “Click to skip” hint after validating the interaction pattern.
+- Updated splash replay behavior so the splash can appear again when reopening from the Home screen after the cooldown expires, not only on a cold launch.
+- Added a hidden test gesture on the library screen so four quick `up` presses while `Log Out` is focused reset the splash cooldown for the next app open.
 
 ## Login Screen
 
@@ -73,7 +75,14 @@ This document captures the major research, engineering, and UX work completed du
 - Removed the redundant `VIDEO` badge from each card.
 - Reformatted show dates to `MM-DD-YYYY`.
 - Moved date placement to the bottom-right of the card.
-- Improved focused-card readability by switching focused text to black.
+- Improved focused-card readability while keeping selected-card text white.
+- Reworked selected-card visuals so focused titles and dates stay white.
+- Brightened the selected card background and tightened the card inset so the focus state feels more intentional.
+- Tuned the custom selected-card border to stay subtle and aligned with the outer card edge.
+- Fixed selected-card text so focused titles and dates remain white.
+- Set the focused card background boost to `0.30`.
+- Changed card thumbnails to a fixed `381:200` ratio.
+- Updated card posters to use a contained presentation with rounded corners instead of cropping.
 
 ## Detail Screen
 
@@ -103,6 +112,7 @@ This document captures the major research, engineering, and UX work completed du
 - Added a thin green progress bar along the bottom edge of started cards.
 - Added a green completed badge with a checkmark for finished shows.
 - Configured completed shows to start fresh when replayed later.
+- Added a `lastUpdatedAt` timestamp to persisted progress records so `Continue Watching` content can be ordered by most recently watched.
 
 ## Navigation and Focus
 
@@ -113,6 +123,36 @@ This document captures the major research, engineering, and UX work completed du
 - Preserved the normal tvOS “hold back to exit” behavior by not over-intercepting system exit.
 - Added focus restoration intent so returning from a detail screen targets the previously selected card.
 - Continued refining focus restoration behavior on the library grid.
+- Replaced the default tvOS button lift on library cards with a custom focusable card treatment so selection no longer grows far past the card bounds.
+- Added deep-link handling for `njtv://show/<id>` so Top Shelf content can route directly into show detail screens.
+
+## Secret Shows API and Caching
+
+- Added automatic Secret Shows refresh when the app becomes active so new episodes appear without logging out and back in.
+- Added URL normalization for older `iframe.mediadelivery.net` video links by rewriting them to CDN playlist URLs.
+- Added shared cached Secret Shows storage for app-extension use.
+
+## Top Shelf Extension
+
+- Added a new `NewsJunkieTopShelf` extension target backed by `TVServices`.
+- Shared session, playback progress, device ID, and cached Secret Shows data through the `group.com.thenewsjunkie.tv` App Group.
+- Built Top Shelf content generation around the newest available show plus a `Continue Watching` section ordered by recent playback activity.
+- Added deep-link actions from Top Shelf cards into the tvOS app.
+- Added fallback Top Shelf artwork using bundled Secret Shows placeholder art when poster URLs are missing or malformed.
+- Rendered fallback Top Shelf artwork into a padded 16:9 canvas so it fits `.hdtv` cards more predictably.
+
+## Build and Environment Configuration
+
+- Added app and extension entitlements for the shared App Group.
+- Added a real app `Info.plist` with the `njtv` URL scheme registration.
+- Added shared Xcode configs for dev/live server switching:
+  - `Config/Debug-Dev.xcconfig`
+  - `Config/Debug-Live.xcconfig`
+  - `Config/Release.xcconfig`
+- Added shared schemes for server switching:
+  - `SS- tvOS Dev`
+  - `SS- tvOS Live`
+- Updated launch behavior so the selected scheme controls the API base URL for both the main app and the Top Shelf extension.
 
 ## Branding and Assets
 
