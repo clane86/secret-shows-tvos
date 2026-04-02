@@ -16,7 +16,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "A55E528C2F674BCA00762A41"
-               BuildableName = "News Junkie.app"
+               BuildableName = "Secret Shows.app"
                BlueprintName = "News Junkie"
                ReferencedContainer = "container:News Junkie.xcodeproj">
             </BuildableReference>
@@ -45,7 +45,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "A55E528C2F674BCA00762A41"
-            BuildableName = "News Junkie.app"
+            BuildableName = "Secret Shows.app"
             BlueprintName = "News Junkie"
             ReferencedContainer = "container:News Junkie.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "A55E528C2F674BCA00762A41"
-            BuildableName = "News Junkie.app"
+            BuildableName = "Secret Shows.app"
             BlueprintName = "News Junkie"
             ReferencedContainer = "container:News Junkie.xcodeproj">
          </BuildableReference>

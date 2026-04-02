@@ -15,10 +15,17 @@ final class ContentProvider: TVTopShelfContentProvider {
 
     override func loadTopShelfContent() async -> (any TVTopShelfContent)? {
         let shows = await loadShows()
-        guard !shows.isEmpty else { return nil }
+        let liveState = await loadLiveStreamState()
+        guard !shows.isEmpty || liveState.isVisible else { return nil }
 
         let records = sharedStore.playbackRecords
-        return TopShelfContentBuilder.makeContent(shows: shows, playbackRecords: records)
+        let imageURLs = await TopShelfImageResolver.resolveImageURLs(for: shows)
+        return TopShelfContentBuilder.makeContent(
+            shows: shows,
+            playbackRecords: records,
+            liveState: liveState,
+            imageURLs: imageURLs
+        )
     }
 
     private func loadShows() async -> [TopShelfShow] {
@@ -36,6 +43,15 @@ final class ContentProvider: TVTopShelfContentProvider {
         }
 
         return sharedStore.cachedShows
+    }
+
+    private func loadLiveStreamState() async -> TopShelfLiveStreamState {
+        do {
+            let settings = try await apiClient.fetchTVSettings()
+            return try await apiClient.resolveLiveStreamState(from: settings)
+        } catch {
+            return .hidden
+        }
     }
 }
 
@@ -142,6 +158,26 @@ private enum TopShelfDateFormatter {
         formatter.locale = Locale(identifier: "en_US_POSIX")
         return formatter
     }()
+
+    static let liveWindowFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.timeZone = TimeZone(identifier: "America/New_York")
+        return formatter
+    }()
+}
+
+private enum TopShelfLiveStreamState {
+    case hidden
+    case visible(url: URL)
+
+    var isVisible: Bool {
+        if case .visible = self {
+            return true
+        }
+        return false
+    }
 }
 
 private final class TopShelfSharedStore {
@@ -188,7 +224,9 @@ private final class TopShelfSharedStore {
 private enum TopShelfContentBuilder {
     static func makeContent(
         shows: [TopShelfShow],
-        playbackRecords: [String: TopShelfPlaybackRecord]
+        playbackRecords: [String: TopShelfPlaybackRecord],
+        liveState: TopShelfLiveStreamState,
+        imageURLs: [String: URL]
     ) -> TVTopShelfSectionedContent? {
         let showsByID = Dictionary(uniqueKeysWithValues: shows.map { ($0.id, $0) })
         let newestShows = shows.sorted { $0.publishedAt > $1.publishedAt }
@@ -199,6 +237,9 @@ private enum TopShelfContentBuilder {
             }
         )
 
+        let latestShow = newestShows.first
+        let latestID = latestShow?.id
+
         let continueWatchingShows = playbackRecords
             .filter { _, record in
                 record.isStarted && !record.isCompleted
@@ -207,12 +248,11 @@ private enum TopShelfContentBuilder {
                 ($0.value.lastUpdatedAt ?? .distantPast) > ($1.value.lastUpdatedAt ?? .distantPast)
             }
             .compactMap { showsByID[$0.key] }
+            .filter { $0.id != latestID }
             .prefix(4)
             .map { $0 }
 
-        let latestUnstartedShow = newestShows.first { !startedShowIDs.contains($0.id) }
         let continueWatchingIDs = Set(continueWatchingShows.map(\.id))
-        let latestID = latestUnstartedShow?.id
 
         let fallbackShows = newestShows.filter { show in
             guard show.id != latestID else { return false }
@@ -222,8 +262,33 @@ private enum TopShelfContentBuilder {
 
         var sections = [TVTopShelfItemCollection<TVTopShelfSectionedItem>]()
 
-        if let latestUnstartedShow,
-           let latestItem = makeSectionedItem(for: latestUnstartedShow, playbackRecord: nil) {
+        if case .visible(let liveURL) = liveState {
+            var liveSectionItems = [TVTopShelfSectionedItem]()
+
+            if let liveItem = makeLiveItem(streamURL: liveURL) {
+                liveSectionItems.append(liveItem)
+            }
+
+            if let latestShow,
+               let latestItem = makeSectionedItem(
+                for: latestShow,
+                playbackRecord: playbackRecords[latestShow.id],
+                imageURL: imageURLs[latestShow.id]
+               ) {
+                liveSectionItems.append(latestItem)
+            }
+
+            if !liveSectionItems.isEmpty {
+                let collection = TVTopShelfItemCollection(items: liveSectionItems)
+                collection.title = "LIVE NOW!"
+                sections.append(collection)
+            }
+        } else if let latestShow,
+                  let latestItem = makeSectionedItem(
+                    for: latestShow,
+                    playbackRecord: playbackRecords[latestShow.id],
+                    imageURL: imageURLs[latestShow.id]
+                  ) {
             let collection = TVTopShelfItemCollection(items: [latestItem])
             collection.title = "Latest Episode"
             sections.append(collection)
@@ -232,7 +297,11 @@ private enum TopShelfContentBuilder {
         let remainingCount = max(0, 4 - continueWatchingShows.count)
         let additionalShows = Array(fallbackShows.prefix(remainingCount))
         let continueItems = (continueWatchingShows + additionalShows).compactMap { show in
-            makeSectionedItem(for: show, playbackRecord: playbackRecords[show.id])
+            makeSectionedItem(
+                for: show,
+                playbackRecord: playbackRecords[show.id],
+                imageURL: imageURLs[show.id]
+            )
         }
 
         if !continueItems.isEmpty {
@@ -247,15 +316,16 @@ private enum TopShelfContentBuilder {
 
     private static func makeSectionedItem(
         for show: TopShelfShow,
-        playbackRecord: TopShelfPlaybackRecord?
+        playbackRecord: TopShelfPlaybackRecord?,
+        imageURL: URL?
     ) -> TVTopShelfSectionedItem? {
         let item = TVTopShelfSectionedItem(identifier: show.id)
         item.title = show.title
         item.imageShape = .hdtv
 
-        if let posterURL = sanitizedURL(from: show.posterImage) {
-            item.setImageURL(posterURL, for: .screenScale1x)
-            item.setImageURL(posterURL, for: .screenScale2x)
+        if let imageURL {
+            item.setImageURL(imageURL, for: .screenScale1x)
+            item.setImageURL(imageURL, for: .screenScale2x)
         } else if let fallbackURL = bundledFallbackImageURL() {
             item.setImageURL(fallbackURL, for: .screenScale1x)
             item.setImageURL(fallbackURL, for: .screenScale2x)
@@ -273,12 +343,35 @@ private enum TopShelfContentBuilder {
         return item
     }
 
-    private static func bundledFallbackImageURL() -> URL? {
-        if let paddedURL = paddedFallbackImageURL() {
-            return paddedURL
+    private static func makeLiveItem(streamURL: URL) -> TVTopShelfSectionedItem? {
+        let item = TVTopShelfSectionedItem(identifier: "live-stream")
+        item.title = "LIVE STREAM!"
+        item.imageShape = .hdtv
+
+        if let liveImageURL = liveCardImageURL() {
+            item.setImageURL(liveImageURL, for: .screenScale1x)
+            item.setImageURL(liveImageURL, for: .screenScale2x)
         }
 
-        return Bundle.main.url(forResource: "img_secret-shows", withExtension: "png")
+        item.displayAction = TVTopShelfAction(url: URL(string: "njtv://live")!)
+        return item
+    }
+
+    static func bundledFallbackImageURL() -> URL? {
+        backupCardImageURL() ?? bundleFallbackImageURL()
+    }
+
+    private static func liveCardImageURL() -> URL? {
+        Bundle.main.url(forResource: "ssLiveTopShelf", withExtension: "png")
+            ?? bundledFallbackImageURL()
+    }
+
+    private static func backupCardImageURL() -> URL? {
+        Bundle.main.url(forResource: "ssTopShelfBackup", withExtension: "png")
+    }
+
+    private static func bundleFallbackImageURL() -> URL? {
+        Bundle.main.url(forResource: "img_secret-shows", withExtension: "png")
     }
 
     private static func paddedFallbackImageURL() -> URL? {
@@ -331,7 +424,7 @@ private enum TopShelfContentBuilder {
         }
     }
 
-    private static func sanitizedURL(from string: String?) -> URL? {
+    static func sanitizedURL(from string: String?) -> URL? {
         guard let string else { return nil }
         let trimmed = string.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmed.isEmpty, trimmed.lowercased() != "null", trimmed.lowercased() != "<null>" else {
@@ -341,8 +434,90 @@ private enum TopShelfContentBuilder {
     }
 }
 
+private enum TopShelfImageResolver {
+    static func resolveImageURLs(for shows: [TopShelfShow]) async -> [String: URL] {
+        let fallbackURL = TopShelfContentBuilder.bundledFallbackImageURL()
+        return await withTaskGroup(of: (String, URL?).self, returning: [String: URL].self) { group in
+            for show in shows {
+                group.addTask {
+                    let resolvedURL = await resolveImageURL(for: show, fallbackURL: fallbackURL)
+                    return (show.id, resolvedURL)
+                }
+            }
+
+            var result = [String: URL]()
+            for await (showID, imageURL) in group {
+                if let imageURL {
+                    result[showID] = imageURL
+                }
+            }
+            return result
+        }
+    }
+
+    private static func resolveImageURL(for show: TopShelfShow, fallbackURL: URL?) async -> URL? {
+        guard let posterURL = TopShelfContentBuilder.sanitizedURL(from: show.posterImage) else {
+            return fallbackURL
+        }
+
+        guard await canLoadImage(from: posterURL) else {
+            return fallbackURL
+        }
+
+        return posterURL
+    }
+
+    private static func canLoadImage(from remoteURL: URL) async -> Bool {
+        do {
+            let (data, response) = try await URLSession.shared.data(from: remoteURL)
+            guard let httpResponse = response as? HTTPURLResponse,
+                  (200...299).contains(httpResponse.statusCode),
+                  UIImage(data: data) != nil else {
+                return false
+            }
+            return true
+        } catch {
+            return false
+        }
+    }
+}
+
 private final class TopShelfAPIClient {
     private let decoder = JSONDecoder()
+
+    struct TVSettingsResponse: Decodable {
+        let liveStreamURL: String?
+        let ssLiveOverride: Bool?
+        let weeklyShow: WeeklyShowWindow?
+
+        enum CodingKeys: String, CodingKey {
+            case liveStreamURL = "LiveStreamURL"
+            case ssLiveOverride = "SS_Live_Override"
+            case weeklyShow
+        }
+
+        var sanitizedLiveStreamURL: URL? {
+            guard let liveStreamURL else { return nil }
+            let trimmedURL = liveStreamURL.trimmingCharacters(in: .whitespacesAndNewlines)
+            guard !trimmedURL.isEmpty else { return nil }
+            return URL(string: trimmedURL)
+        }
+    }
+
+    struct WeeklyShowWindow: Decodable {
+        let start: String
+        let end: String
+
+        var containsNow: Bool {
+            guard let startDate = TopShelfDateFormatter.liveWindowFormatter.date(from: start),
+                  let endDate = TopShelfDateFormatter.liveWindowFormatter.date(from: end) else {
+                return false
+            }
+
+            let now = Date()
+            return startDate <= now && now <= endDate
+        }
+    }
 
     func fetchSecretShows(session: TopShelfUserSession) async throws -> [TopShelfShow] {
         let body = try await request(action: "secretshows", method: "GET", requiresAuth: true, session: session)
@@ -353,6 +528,39 @@ private final class TopShelfAPIClient {
         }
 
         return response.secretShows ?? []
+    }
+
+    func fetchTVSettings() async throws -> TVSettingsResponse {
+        guard let url = URL(string: TopShelfAPIConfiguration.settingsURLString) else {
+            throw TopShelfAPIError.invalidResponse
+        }
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.setValue("application/json", forHTTPHeaderField: "Accept")
+
+        let (data, response) = try await URLSession.shared.data(for: request)
+        guard let httpResponse = response as? HTTPURLResponse,
+              (200...299).contains(httpResponse.statusCode) else {
+            throw TopShelfAPIError.invalidResponse
+        }
+
+        return try decoder.decode(TVSettingsResponse.self, from: data)
+    }
+
+    func resolveLiveStreamState(from settings: TVSettingsResponse) async throws -> TopShelfLiveStreamState {
+        guard let liveStreamURL = settings.sanitizedLiveStreamURL else {
+            return .hidden
+        }
+
+        if settings.ssLiveOverride == true {
+            return .visible(url: liveStreamURL)
+        }
+
+        guard let liveWindow = settings.weeklyShow else {
+            return .hidden
+        }
+        return liveWindow.containsNow ? .visible(url: liveStreamURL) : .hidden
     }
 
     private func request(
@@ -412,6 +620,7 @@ private enum TopShelfAPIConfiguration {
         #endif
     }()
     static let apiPath = "/api/v6/ApiControllerV7.php"
+    static let settingsURLString = Bundle.main.object(forInfoDictionaryKey: "SettingsAPIURL") as? String ?? "https://gpmandlkcdompmdvethh.supabase.co/functions/v1/tv-settings/"
     static let appKey = "f1b23fc72bd79ce53ab96e48b24b78a2"
     static let appVersion = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "1.0"
     static let deviceType = "AppleTV"

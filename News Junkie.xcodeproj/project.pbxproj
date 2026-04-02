@@ -511,6 +511,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "News Junkie/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Secret Shows";
 				INFOPLIST_KEY_CFBundleURLTypes = "{\n    CFBundleTypeRole = Viewer;\n    CFBundleURLName = \"com.thenewsjunkie.tv\";\n    CFBundleURLSchemes =     (\n        njtv\n    );\n}";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -518,7 +519,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "clane.News-Junkie";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Secret Shows";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
@@ -543,6 +544,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "News Junkie/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Secret Shows";
 				INFOPLIST_KEY_CFBundleURLTypes = "{\n    CFBundleTypeRole = Viewer;\n    CFBundleURLName = \"com.thenewsjunkie.tv\";\n    CFBundleURLSchemes =     (\n        njtv\n    );\n}";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -550,7 +552,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "clane.News-Junkie";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Secret Shows";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
@@ -705,6 +707,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "News Junkie/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Secret Shows";
 				INFOPLIST_KEY_CFBundleURLTypes = "{\n    CFBundleTypeRole = Viewer;\n    CFBundleURLName = \"com.thenewsjunkie.tv\";\n    CFBundleURLSchemes =     (\n        njtv\n    );\n}";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -712,7 +715,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "clane.News-Junkie";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Secret Shows";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG DEV_SERVER $(inherited)";
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -738,6 +741,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "News Junkie/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Secret Shows";
 				INFOPLIST_KEY_CFBundleURLTypes = "{\n    CFBundleTypeRole = Viewer;\n    CFBundleURLName = \"com.thenewsjunkie.tv\";\n    CFBundleURLSchemes =     (\n        njtv\n    );\n}";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -745,7 +749,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "clane.News-Junkie";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Secret Shows";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;

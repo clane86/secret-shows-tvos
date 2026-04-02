@@ -1,1 +1,3 @@
 API_BASE_URL = https://thenewsjunkie.com
+SETTINGS_API_URL = https://gpmandlkcdompmdvethh.supabase.co/functions/v1/tv-settings/
+UPCOMING_SECRET_SHOW_API_URL = https:/$()/dev.thenewsjunkie.com/api/v1/upcoming-secret-show-time/?format=json

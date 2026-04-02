@@ -18,6 +18,8 @@
     <string>$(MARKETING_VERSION)</string>
     <key>CFBundleVersion</key>
     <string>$(CURRENT_PROJECT_VERSION)</string>
+    <key>SettingsAPIURL</key>
+    <string>$(SETTINGS_API_URL)</string>
     <key>CFBundleURLTypes</key>
     <array>
         <dict>
