@@ -56,7 +56,7 @@ final class ContentProvider: TVTopShelfContentProvider {
 }
 
 private enum TopShelfSharedStorage {
-    static let appGroupID = "group.com.thenewsjunkie.tv"
+    static let appGroupID = "group.com.thenewsjunkie.secretshows"
 
     static var defaults: UserDefaults {
         UserDefaults(suiteName: appGroupID) ?? .standard

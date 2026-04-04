@@ -40,7 +40,7 @@
 		A5035B8B2F6B8CE700FB8892 /* NewsJunkieTopShelf.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = NewsJunkieTopShelf.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5035B8D2F6B8CE700FB8892 /* TVServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TVServices.framework; path = System/Library/Frameworks/TVServices.framework; sourceTree = SDKROOT; };
 		A524700F2F679B500067DF14 /* News Junkie.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = "News Junkie.xcodeproj"; sourceTree = "<group>"; };
-		A55E528D2F674BCA00762A41 /* News Junkie.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "News Junkie.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A55E528D2F674BCA00762A41 /* Secret Shows.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Secret Shows.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A55E52AF2F674D9200762A41 /* News Junkie.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "News Junkie.xcodeproj"; path = "../../NewsJunkie-iPhone-Source/News Junkie.xcodeproj"; sourceTree = SOURCE_ROOT; };
 		A55E52BC2F675BF800762A41 /* News Junkie.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = "News Junkie.xcodeproj"; sourceTree = "<group>"; };
 		D3B100000000000000000001 /* Config/Debug-Dev.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Config/Debug-Dev.xcconfig"; sourceTree = SOURCE_ROOT; };
@@ -139,7 +139,7 @@
 		A55E528E2F674BCA00762A41 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A55E528D2F674BCA00762A41 /* News Junkie.app */,
+				A55E528D2F674BCA00762A41 /* Secret Shows.app */,
 				A5035B8B2F6B8CE700FB8892 /* NewsJunkieTopShelf.appex */,
 			);
 			name = Products;
@@ -213,7 +213,7 @@
 			packageProductDependencies = (
 			);
 			productName = "News Junkie";
-			productReference = A55E528D2F674BCA00762A41 /* News Junkie.app */;
+			productReference = A55E528D2F674BCA00762A41 /* Secret Shows.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -322,7 +322,7 @@
 				CODE_SIGN_ENTITLEMENTS = NewsJunkieTopShelf/NewsJunkieTopShelf.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 238VZ377MF;
+				DEVELOPMENT_TEAM = GXBGTSRVZ7;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = NewsJunkieTopShelf/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = NewsJunkieTopShelf;
@@ -333,7 +333,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "clane.News-Junkie.NewsJunkieTopShelf";
+				PRODUCT_BUNDLE_IDENTIFIER = com.thenewsjunkie.secretshows.topshelf;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -352,7 +352,7 @@
 				CODE_SIGN_ENTITLEMENTS = NewsJunkieTopShelf/NewsJunkieTopShelf.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 238VZ377MF;
+				DEVELOPMENT_TEAM = GXBGTSRVZ7;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = NewsJunkieTopShelf/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = NewsJunkieTopShelf;
@@ -363,7 +363,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "clane.News-Junkie.NewsJunkieTopShelf";
+				PRODUCT_BUNDLE_IDENTIFIER = com.thenewsjunkie.secretshows.topshelf;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -507,7 +507,7 @@
 				CODE_SIGN_ENTITLEMENTS = "News Junkie/News Junkie.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 238VZ377MF;
+				DEVELOPMENT_TEAM = GXBGTSRVZ7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "News Junkie/Info.plist";
@@ -518,7 +518,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "clane.News-Junkie";
+				PRODUCT_BUNDLE_IDENTIFIER = com.thenewsjunkie.secretshows;
 				PRODUCT_NAME = "Secret Shows";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -537,10 +537,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = "News Junkie/News Junkie.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "News Junkie/News JunkieRelease.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 238VZ377MF;
+				DEVELOPMENT_TEAM = GXBGTSRVZ7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "News Junkie/Info.plist";
@@ -551,7 +551,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "clane.News-Junkie";
+				PRODUCT_BUNDLE_IDENTIFIER = com.thenewsjunkie.secretshows;
 				PRODUCT_NAME = "Secret Shows";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -703,7 +703,7 @@
 				CODE_SIGN_ENTITLEMENTS = "News Junkie/News Junkie.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 238VZ377MF;
+				DEVELOPMENT_TEAM = GXBGTSRVZ7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "News Junkie/Info.plist";
@@ -714,7 +714,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "clane.News-Junkie";
+				PRODUCT_BUNDLE_IDENTIFIER = com.thenewsjunkie.secretshows;
 				PRODUCT_NAME = "Secret Shows";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG DEV_SERVER $(inherited)";
@@ -737,7 +737,7 @@
 				CODE_SIGN_ENTITLEMENTS = "News Junkie/News Junkie.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 238VZ377MF;
+				DEVELOPMENT_TEAM = GXBGTSRVZ7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "News Junkie/Info.plist";
@@ -748,7 +748,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "clane.News-Junkie";
+				PRODUCT_BUNDLE_IDENTIFIER = com.thenewsjunkie.secretshows;
 				PRODUCT_NAME = "Secret Shows";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
@@ -769,7 +769,7 @@
 				CODE_SIGN_ENTITLEMENTS = NewsJunkieTopShelf/NewsJunkieTopShelf.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 238VZ377MF;
+				DEVELOPMENT_TEAM = GXBGTSRVZ7;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = NewsJunkieTopShelf/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = NewsJunkieTopShelf;
@@ -780,7 +780,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "clane.News-Junkie.NewsJunkieTopShelf";
+				PRODUCT_BUNDLE_IDENTIFIER = com.thenewsjunkie.secretshows.topshelf;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -800,7 +800,7 @@
 				CODE_SIGN_ENTITLEMENTS = NewsJunkieTopShelf/NewsJunkieTopShelf.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 238VZ377MF;
+				DEVELOPMENT_TEAM = GXBGTSRVZ7;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = NewsJunkieTopShelf/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = NewsJunkieTopShelf;
@@ -811,7 +811,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "clane.News-Junkie.NewsJunkieTopShelf";
+				PRODUCT_BUNDLE_IDENTIFIER = com.thenewsjunkie.secretshows.topshelf;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
